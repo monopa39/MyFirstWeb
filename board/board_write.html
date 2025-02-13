@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글작성</title>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+    <link rel="stylesheet" href="./board_write.css" />
+    
+</head>
+<body>
+    <button onclick="returnToBorad()">게시판으로</button>
+    
+    <section class="conA">
+        
+        <h2>게시글 작성</h2> 
+        <input type="text" id="title" placeholder="글제목">
+       
+        <textarea id="content" placeholder="내용을 입력해주세요"></textarea>
+        <button onclick="addPost()">전송</button>
+    </section>
+    
+    <script src="./board.js"></script>
+</body>
+</html>

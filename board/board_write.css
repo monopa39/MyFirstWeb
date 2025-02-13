@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+}
+
+.conA {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 80vw;
+    margin: auto;
+}
+.conA input {
+    width: 95%;
+    margin-bottom: 10px;
+}
+.conA textarea {
+    width: 95%;
+    height: 30vh;
+    margin-bottom: 20px;
+}
