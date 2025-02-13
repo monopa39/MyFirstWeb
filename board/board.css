@@ -35,3 +35,17 @@ body {
     margin-bottom: 0;
     font-size: 18px;
 }
+
+@media (max-width: 850px) {
+    .conA {
+        height: 22vw
+        
+        
+    }
+    .conA h1 {
+        font-size: 8vw;
+    }
+    .conA p {
+        font-size: 2vw;
+    }
+}
