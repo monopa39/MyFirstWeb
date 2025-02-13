@@ -6,7 +6,7 @@ body {
     justify-content: space-between;
     align-items: center;
     height: 25vh;
-    width: 150vh;
+    width: 100%;
     color: #fff;
     color: var(--text-bright-color);
     text-align: center;
