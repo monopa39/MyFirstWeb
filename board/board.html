@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>간단한 게시판</title>
+    <title>Firebase 게시판</title>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
     <style>
         body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; }
         textarea, input { width: 100%; margin-bottom: 10px; padding: 8px; }
@@ -23,6 +25,32 @@
     <div id="board"></div>
 
     <script>
+        // 🔥 Firebase 설정 (여기 값을 본인 Firebase 설정 값으로 변경해야 함!)
+        const firebaseConfig = {
+                        apiKey: "AIzaSyDbxsJz3CgvnB_e_kaD2WaxiJx5AyDL_QQ",
+                        authDomain: "simpleboard-fb6d1.firebaseapp.com",
+                        projectId: "simpleboard-fb6d1",
+                        storageBucket: "simpleboard-fb6d1.firebasestorage.app",
+                        messagingSenderId: "1064066037827",
+                        appId: "1:1064066037827:web:0678585992520d96edfcf6",
+                        measurementId: "G-WE44941W3F"
+                     };
+
+        // Firebase 초기화
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Firestore에서 게시글 불러오기
+        function loadPosts() {
+            document.getElementById('board').innerHTML = ""; // 기존 내용 초기화
+            db.collection("posts").orderBy("timestamp", "desc").get().then(snapshot => {
+                snapshot.forEach(doc => {
+                    let data = doc.data();
+                    displayPost(data.title, data.content);
+                });
+            });
+        }
+
         function addPost() {
             let title = document.getElementById('title').value;
             let content = document.getElementById('content').value;
@@ -32,15 +60,29 @@
                 return;
             }
 
+            // Firestore에 데이터 저장
+            db.collection("posts").add({
+                title: title,
+                content: content,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                loadPosts(); // 새로고침 없이 바로 반영
+                document.getElementById('title').value = "";
+                document.getElementById('content').value = "";
+            }).catch(error => {
+                console.error("Error adding document: ", error);
+            });
+        }
+
+        function displayPost(title, content) {
             let post = document.createElement('div');
             post.classList.add('post');
             post.innerHTML = `<div class="title">${title}</div><div>${content}</div>`;
-
-            document.getElementById('board').prepend(post);
-
-            document.getElementById('title').value = "";
-            document.getElementById('content').value = "";
+            document.getElementById('board').appendChild(post);
         }
+
+        // 페이지 로드 시 게시글 불러오기
+        window.onload = loadPosts;
     </script>
 
 </body>
