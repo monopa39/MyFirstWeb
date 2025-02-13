@@ -10,74 +10,26 @@
     
 </head>
 <body>
+    <section class = "conA">
+        <img src="./assets/images/giphy.gif" alt="">
+        <div class="container">
+            <h1>게시판</h1>
+            <p>내일 죽을 것처럼 살고, 영원히 살 것처럼 배워라.</p>
+        </div>
+        <img src="./assets/images/giphy.gif" alt="">
+    </section>
 
+    
+    <div id="board"></div>
+    
     <h2>게시글 작성</h2>
     <input type="text" id="title" placeholder="제목 입력">
     <textarea id="content" placeholder="내용 입력"></textarea>
     <button onclick="addPost()">전송</button>
 
-    <h2>게시판</h2>
-    <div id="board"></div>
+    
 
-    <script>
-        // 🔥 Firebase 설정 (여기 값을 본인 Firebase 설정 값으로 변경해야 함!)
-        const firebaseConfig = {
-                        apiKey: "AIzaSyDbxsJz3CgvnB_e_kaD2WaxiJx5AyDL_QQ",
-                        authDomain: "simpleboard-fb6d1.firebaseapp.com",
-                        projectId: "simpleboard-fb6d1",
-                        storageBucket: "simpleboard-fb6d1.firebasestorage.app",
-                        messagingSenderId: "1064066037827",
-                        appId: "1:1064066037827:web:0678585992520d96edfcf6",
-                        measurementId: "G-WE44941W3F"
-                     };
-
-       // Firebase SDK 모듈 가져오기
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-            import { getFirestore, collection, addDoc, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-// Firebase 초기화
-            const app = initializeApp(firebaseConfig);
-            const db = getFirestore(app);
-
-// Firestore에서 게시글 불러오기
-            async function loadPosts() {
-                 document.getElementById('board').innerHTML = ""; // 기존 내용 초기화
-                const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
-    const snapshot = await getDocs(q);
-
-    snapshot.forEach(doc => {
-        let data = doc.data();
-        displayPost(data.title, data.content);
-    });
-}
-
-// Firestore에 게시글 추가
-async function addPost() {
-    let title = document.getElementById('title').value;
-    let content = document.getElementById('content').value;
-
-    if (!title || !content) {
-        alert("제목과 내용을 입력해주세요.");
-        return;
-    }
-
-    try {
-        await addDoc(collection(db, "posts"), {
-            title: title,
-            content: content,
-            timestamp: new Date()
-        });
-        loadPosts(); // 새로고침 없이 바로 반영
-        document.getElementById('title').value = "";
-        document.getElementById('content').value = "";
-    } catch (error) {
-        console.error("Error adding document: ", error);
-    }
-}
-
-// 페이지 로드 시 게시글 불러오기
-window.onload = loadPosts;
-    </script>
+    
 
 </body>
 </html>
